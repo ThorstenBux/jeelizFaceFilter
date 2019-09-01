@@ -37,7 +37,7 @@ function init_threeScene(spec) {
 
   //CREATE THE CAMERA
   const aspecRatio = spec.canvasElement.width / spec.canvasElement.height;
-  THREECAMERA = new THREE.PerspectiveCamera(50, aspecRatio, 0.1, 100);
+  THREECAMERA = new THREE.PerspectiveCamera(40, aspecRatio, 0.1, 100);
 } // end init_threeScene()
 
 //launched by body.onload() :
