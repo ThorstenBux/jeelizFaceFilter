@@ -44,6 +44,7 @@ function init_threeScene(spec) {
 function main(){
   JeelizResizer.size_canvas({
     canvasId: 'jeeFaceFilterCanvas',
+    isFullScreen: true,
     callback: function(isError, bestVideoSettings){
       init_faceFilter(bestVideoSettings);
     }
