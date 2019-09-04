@@ -23,7 +23,7 @@ function init_threeScene(spec) {
     occluderURL: "models3D/face.json"
   });
 
-  threeStuffs.faceObject.add(r.occluder);
+  // threeStuffs.faceObject.add(r.occluder);
   r.occluder.rotation.set(0.3,0,0);
   r.occluder.position.set(0,0.1,-0.04);
   r.occluder.scale.multiplyScalar(0.0084);
@@ -37,6 +37,7 @@ function init_threeScene(spec) {
 
   //CREATE THE CAMERA
   const aspecRatio = spec.canvasElement.width / spec.canvasElement.height;
+  console.log('aspecRatio', aspecRatio)
   THREECAMERA = new THREE.PerspectiveCamera(40, aspecRatio, 0.1, 100);
 } // end init_threeScene()
 
@@ -55,6 +56,7 @@ function init_faceFilter(videoSettings){
   JEEFACEFILTERAPI.init({
     followZRot: true,
     canvasId: 'jeeFaceFilterCanvas',
+    videoSettings,
     NNCpath: '../../../dist/', // root of NNC.json file
     maxFacesDetected: 1,
     callbackReady: function(errCode, spec){

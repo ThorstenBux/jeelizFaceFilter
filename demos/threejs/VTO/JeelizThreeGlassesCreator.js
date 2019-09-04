@@ -23,11 +23,12 @@ const JeelizThreeGlassesCreator=function(spec){
         glassesFramesGeometry.computeVertexNormals();
 
         //custom material with fading at the end of the branches
+        console.log(textureEquirec)
         const uniforms=Object.assign(THREE.ShaderLib.basic.uniforms,
             {
                 envMap: {value: textureEquirec},
-                color: {value: new THREE.Color(0xf0f0f0)},
-                uBranchFading: {value: new THREE.Vector2(-90,60)} //first value: position (lower -> to the back), second: transition brutality
+                diffuse: {value: new THREE.Vector3(1,0,0)},
+                uBranchFading: {value: new THREE.Vector2(0,60)} //first value: position (lower -> to the back), second: transition brutality
             });
 
         //tweak vertex shader to give the Z of the current point
@@ -39,12 +40,22 @@ const JeelizThreeGlassesCreator=function(spec){
         const GLSLcomputeAlpha = 'gl_FragColor.a=smoothstep(uBranchFading.x-uBranchFading.y*0.5, uBranchFading.x+uBranchFading.y*0.5, vPosZ);'
         fragmentShaderSource = fragmentShaderSource.replace('#include <fog_fragment>', GLSLcomputeAlpha);
 
+        console.log('fragmentShaderSource\n', fragmentShaderSource)
+        console.log('vertexShaderSource\n', vertexShaderSource)
         const mat=new THREE.ShaderMaterial({
             vertexShader: vertexShaderSource,
             fragmentShader: fragmentShaderSource,
             uniforms: uniforms,
             transparent: true
         });
+        const ma2 = new THREE.MeshStandardMaterial({
+          // transparent : true,
+          // opacity     : 0.0,
+          color       : 0xffffff,
+          // envMap      : window.envMap,
+          roughness   : 0,
+          // metalness   : 0.62,
+        })
         mat.envMap=textureEquirec;
         const glassesFramesMesh=new THREE.Mesh(glassesFramesGeometry, mat);
         threeGlasses.add(glassesFramesMesh);
@@ -60,8 +71,16 @@ const JeelizThreeGlassesCreator=function(spec){
             color: 0x2233aa,
             transparent: true
         });
+        const ma2 = new THREE.MeshStandardMaterial({
+          // transparent : true,
+          // opacity     : 0.0,
+          color       : 0xffffff,
+          // envMap      : window.envMap,
+          roughness   : 0,
+          // metalness   : 0.62,
+        })
         window.mat=mat;
-        const glassesLensesMesh=new THREE.Mesh(glassesLensesGeometry, mat);
+        const glassesLensesMesh=new THREE.Mesh(glassesLensesGeometry, ma2);
         threeGlasses.add(glassesLensesMesh);
     });
 
